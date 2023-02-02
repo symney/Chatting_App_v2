@@ -1,0 +1,30 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "async": "2.6.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "express": "4.16.4",
+    "express-session": "^1.16.1",
+    "express-sessions": "^1.0.6",
+    "express-ws": "^4.0.0",
+    "formidable": "^1.2.1",
+    "mongodb": "^3.2.7",
+    "multer": "^1.4.2",
+    "nodemon": "^1.19.0",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "socket-io": "^1.0.0",
+    "socket.io": "^2.2.0",
+    "ws": "^7.0.1"
+  }
+}

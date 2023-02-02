@@ -1,0 +1,111 @@
+html,* {
+    position: relative;
+    margin: 0px;
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+    font-family: "boogaloo",cursive;
+    box-sizing: border-box;
+    border-color: rgb(160, 160, 160);
+    
+}
+
+#backdrop {
+    background-color: #47bfd7;
+    background-image: linear-gradient(rgba(0,0,0,.5)),url(../resources/viipe.png);
+    background-position: center;
+    min-height:100vh;
+    height:auto;
+}
+.viipe{
+    width: 65%;
+    height: 40%;
+    padding-top: 1.5%;
+    padding-left: 3%;
+    padding-bottom: 1.5%;
+    padding-right: 3%;
+    margin: 0% 17.5%;
+ }
+.viipe_text{
+    font-size: 200px;
+    padding:0px;
+    text-align:center;
+}
+.sign-up{
+    position: absolute;
+    background-color:rgb(252, 233, 210) ;
+    height: 98%;
+    width:34%;
+    right:1%;
+    top:1%;
+    bottom:1%;
+    border-radius: 50px;
+    border-color: rgb(160, 160, 160);;
+    border-style: solid;
+    border-width:10px
+}
+.subtext{
+    margin: 0% 17.5%;
+    padding-left: 3%;
+    padding-right: 3%;
+    font-size: 50px;
+    text-align: center;
+    width:65%;
+    height:10%;
+}
+.sign-in{
+    margin: 0% 17.5%;
+    width:65%;
+    height:max-content;
+}
+.sign-in-text{
+    margin-left: 15%;
+    margin-right: 15%;
+    margin-bottom: 1%;
+    padding:5%;
+    padding-top:.5%;
+    padding-bottom:3%;
+    width:70%;
+    height:auto;
+    border-radius: 50px;
+    border-style: solid;
+    border-width:10px;
+    background-color:rgb(252, 233, 210) ;
+}
+.sign-in-text *{
+    font-family: 'Archivo Black', sans-serif;
+    font-size:30px;
+    margin-bottom: 0%;
+    vertical-align: bottom;
+}
+.user{
+    height:25%;
+    color: black;
+    border-radius: 10px;
+    border-color:transparent;
+    border-top:0%;
+}
+.user::placeholder { /* Firefox, Chrome, Opera */ 
+    color:  rgb(160, 160, 160);
+} 
+.utext{
+    color: black;
+    height:auto;
+    margin-bottom: 0%;
+}
+.submit{
+    height:20%;
+    width:34%;
+    float: left;
+    margin-left:15%;
+    border-radius: 20px;
+    border-width: 10px;
+    color: black;
+    background-color: aquamarine;
+    border-style: solid;
+}
+.sign{
+    margin-left:2%;
+    
+}

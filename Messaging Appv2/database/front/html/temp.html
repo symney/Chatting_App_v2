@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="/data/front/css/login.css">
+      <link rel="stylesheet" type="text/css" href="/data/front/css/finallogin.css">
+        <link href="https://fonts.googleapis.com/css?family=Boogaloo&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Archivo+Black&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <header id="backdrop">
+            </div>
+            <div class="subtext">
+                <p>Create Your Account</p>
+            </div>
+          <form action="/create" method="post" enctype="multipart/form-data">
+                  <div class="sign-in-text">
+                          <div>
+              <div>
+                  <label class="utext" for="say">whats your accounts username?</label>
+                  <input class="user" name="username" id="username" required=true placeholder="username">
+                </div>
+                <div>
+                  <label class="utext" for="to">What is your accounts password?</label>
+                  <input class="user" name="password" id="password" required=true placeholder="pas88sword" type="password">
+              </div>
+              <div>
+                  <label class="utext" for="to">What is your email?</label>
+                  <input class="utext" name="email" id="email" required=true placeholder="example@email.com" type="email">
+              </div>
+              <label class="utext" for="to">What is your first name?</label>
+              <input class="utext" name="fname" id="fname" required=true placeholder="john">
+            </div>
+            <div>
+              <label class="utext" for="to">What is your last name?</label>
+              <input class="utext" name="lname" id="password" required=true placeholder="Doe">
+            </div>
+            <div>
+              <label class="utext" for="to">What is your gender?</label>
+              <input class="user" name="gender" id="gender" required=true placeholder="Male or Female">
+            </div>
+            <div>
+              <label class="utext" for="to">What is your phone number?</label>
+              <input class="utext" name="pnum" id="pnum" required=true placeholder="5555555555">
+            </div>
+            <div>
+              <label class="utext" for="to">Upload your profile picture</label>
+              <input class="utext" type="file"; name="file" required=true>
+            </div>
+                  </div>
+                  <button class="submit last">Create Account</button>
+                  <button id="createb" class="submit sign last">Back to Login</button>     
+          </form>
+        </header>
+
+    </body>
+  <script>
+      const button = document.getElementById("createb");
+      button.addEventListener("click", create, false);
+      function create(e){
+        e.preventDefault()
+        console.log("oof")
+        window.location.replace("/login")
+      }
+    </script>
+
+</html>

@@ -1,0 +1,337 @@
+<body>
+  <div class='container'>
+        <div class='nav'>
+            <ion-icon name='menu' id='menu' class='menu' onclick='rotate()'></ion-icon>
+            <p class='viipe' id="{{username}}">Chats</p>
+            <input type='text' id="search" onkeyup="search()" class='search' placeholder='Create new chat {{username}}'>
+            <img class='profile' src='{{profile}}' alt='somethin'>
+        </div>
+        <div class="searchcont" id="resultcont">
+        </div>
+        <div class='area'>
+            <div class='groups'>
+                    <p class='title chats'>Chats</p>
+                <div class="cont">
+                    {{#chats}}
+                    <div class='chat' id='chat'>
+                        <div class='text-cont {{name}}' id="chat_cont" onclick='create(this.firstElementChild.classList[1],this)'>
+                            <div class="id {{other}}{{^other}}{{name}}{{/other}}">{{id}}</div>
+                            <img alt='asdf' class='pic' src='{{pic}}'>
+                            <p class='name' >{{name}}</p>
+                        </div>
+                        <ion-icon name='more' class='check'></ion-icon>
+                    </div>
+                    {{/chats}}
+                </div>
+                
+            </div>
+            <div class='messages' id='messages'>
+                <div class='texted one' id='one'>
+                    <p class='title' id='left'>{{chats.0.name}}</p>
+                    <ion-icon class='close' name='close' id='onex' onclick='left_off()'></ion-icon>
+                    <div class="call" id='sum' >
+
+                    </div>
+                    <form class="inputd" enctype="multipart/form-data">
+                        <input class='input' type='text' placeholder='Enter Message' onkeypress="send(event,this)">
+                        <button class='send' type="button" onclick='document.getElementById("file").click()'></button>
+                        <input id="files" type="file"  style="display:none;"></button>
+                        <button type="submit" style="display:none;"></button>
+                    </form>      
+                </div>
+                <div class='texted two' id='two'>
+                        <p class='title' id='right'>{{chats.0.name}}</p>
+                        <ion-icon class='close' name='close' id='twox' onclick='right_off()'></ion-icon>
+                        <div class="call" id='sumelse' ></div>
+                            <form class="inputd" enctype="multipart/form-data">
+                                <input class='input' type='text' paceholder='Enter Message'>
+                                <button class='send' onclick="send(this)" ></button>
+                            </form>
+                    </div>
+                </div>
+            <div class='bar'>
+
+            </div>
+        </div>
+    </div>
+  <div id='shadow'></div>    
+</body>
+<script id="script" type='text/javascript'>
+  var username="{{username}}";
+  socket.emit("logged","{{username}}");
+  var timestamp;
+  var emittime=Date.now();
+  var types=false;
+  var men=1;
+  var menu=document.getElementById('menu');
+  var shadow=document.getElementById('shadow');
+  var ones=document.getElementById('one');
+  var twos=document.getElementById('two');
+  var onex=document.getElementById('onex');
+  var twox=document.getElementById('twox');
+  var lefty=document.getElementById('left');
+  var righty=document.getElementById('right');
+  var messages= document.getElementById('messages');
+
+  right_off();
+  left_off();
+  function rotate(){
+      men+=1;
+      if(men%2===0){
+          menu.style= 'transform: rotateZ(90deg);';
+          shadow.style='width: 100%;'
+      }
+      else{
+          menu.style= 'transform: rotateZ(0deg);';
+          shadow.style='width: 0%;'
+      }
+  }
+  function left_off(){
+      var cn=document.getElementById("one").firstElementChild.innerHTML;
+      //if pulled from list of chats make the title of the chat
+      //invisible first so that it can resize properly
+
+      //if the chat has no name like when it is first written
+      //this wont be neccesary
+      if(cn!=''){
+        document.getElementsByClassName(cn)[0].style.background='transparent';
+      }
+      document.getElementById("one").parentElement.removeChild(document.getElementById("one"));
+
+      if(messages.childNodes.length==4){
+          document.getElementById('two').style='width:100%;';
+          document.getElementById('two').id='one';
+          document.getElementById('one').classList.remove('two');
+          document.getElementById('one').classList.add('one');
+          document.getElementById('twox').id='onex';
+          document.getElementById('onex').onclick=left_off;
+          ones=document.getElementById('one');
+      }
+
+  }
+  function right_off(){
+      var cn=document.getElementById("two").firstElementChild.innerHTML;
+      //if pulled from list of chats make the title of the chat
+      //invisible first so that it can resize properly
+
+      //if the chat has no name like when it is first written
+      //this wont be neccesary
+      if(cn!=''){
+        document.getElementsByClassName(cn)[0].style.background='transparent';
+      }
+      twos.parentElement.removeChild(twos);
+      document.getElementById('one').style='width:100%;';
+  }
+  function create(name,ele){
+      document.getElementById("resultcont").style="height:0%;"
+      if(ele.style.background!='rgba(0, 255, 0, 0.5)'){
+          ele.style.background='RGBA(0,255,0,.5)';
+          if(messages.childNodes.length==5){
+              right_off();
+          }
+
+          if(messages.childNodes.length==4){
+              document.getElementById('one').style='width:47.5%;';
+              document.getElementById('one').classList.replace("one","two");
+              document.getElementById('one').id="two";
+              document.getElementById('onex').id="twox"
+              document.getElementById('twox').onclick=right_off;
+              messages.insertAdjacentHTML( 'beforeend',"<div class='texted one' id='one'><p class='title' id='left'>Chat two</p><ion-icon class='close' name='close' id='onex' onclick='left_off()'></ion-icon><form class='inputd' enctype='multipart/form-data' action='/upload' method='POST' ><input class='input' type='text' placeholder='Enter Message' onkeypress='send(event,this)'><button class='send' type='button' onclick='this.parentElement.children[2].click()'></button><input id='file' type='file'  name='file' style='display:none;'></button><button type='submit' style='display:none;'></button></form><div class='call' scrollTop=this.scrollHeight+10000000000 id='sum' ></div></div>");
+              messages.lastChild.lastChild.id=document.getElementsByClassName(name)[1].innerHTML;
+              messages.lastChild.style=' width:47.5%;';
+              messages.lastChild.firstChild.innerHTML=name;
+              twos=document.getElementById('two');
+              ones=document.getElementById('one');
+              messages.children[1].firstElementChild.id=document.getElementsByClassName(name)[1].innerHTML
+              messages.firstElementChild; 
+          }
+
+          else{
+              console.log(name)
+              messages.insertAdjacentHTML( 'beforeend',"<div class='texted one' id='one'><p class='title' id='left'>Chat two</p><ion-icon class='close' name='close' id='onex' onclick='left_off()'></ion-icon><form class='inputd' enctype='multipart/form-data' action='/upload' method='POST' ><input class='input' type='text' placeholder='Enter Message' onkeypress='send(event,this)'><button class='send' type='button' onclick='this.parentElement.children[2].click()'></button><input id='file' type='file'  name='file' style='display:none;'></button><button type='submit' style='display:none;'></button></form><div class='call' scrollTop=this.scrollHeight+100000000000  id='sum' ></div></div>");
+              document.getElementById('one').firstElementChild.innerHTML=name;
+              document.getElementById('one').style='width:100%;';
+              messages.children[0].firstElementChild.id=document.getElementsByClassName(name)[1].innerHTML;
+              console.log(document.getElementsByClassName("call")[0]);
+              
+          }
+          var newchat=ele.parentElement;
+          ele.parentElement.parentElement.removeChild(ele.parentElement);
+          document.getElementsByClassName("cont")[0].insertBefore(newchat,document.getElementsByClassName("cont")[0].firstChild)
+          document.getElementsByClassName("cont")[0].scrollTop=0;
+          console.log("boi");
+          socket.emit("click",document.getElementsByClassName(name)[1].innerHTML);
+          
+          
+          
+          
+          
+      }
+  
+  }
+  function send(event,btn){
+      var code=event.keyCode;
+      var text=btn.parentElement.firstElementChild.value;
+      var file=btn.parentElement.children[2];
+      var ids=btn.parentElement.parentElement.firstElementChild.id
+      if(code==13){
+  
+          event.preventDefault();
+          if(text!=""){
+              console.log("sending message");
+              socket.emit("chat",{id:ids,chat:text,sender:username,time:Date.now(),type:"text"});
+              btn.parentElement.firstElementChild.value="";
+          }
+          if(file.value){
+              console.log("------------"+file.value)
+              var formElement = btn.parentElement;
+              var datas = new FormData(formElement);
+              datas.append("id",ids);
+              datas.append("sender",username);
+              datas.append("time",Date.now());
+              file.value=null;
+              $.ajax({
+                  type: "POST",url: "upload", data: datas, cache: false,contentType: false,processData: false, enctype: 'multipart/form-data',
+                  success: (data)=>
+                  {
+                      
+                      
+                  }
+              });
+              file.value=null;
+              datas=null;
+              
+          }
+          else{
+              console.log("?");
+              
+          }
+          
+      
+      }
+      else{
+          types=true;
+          timestamp=Date.now();
+          if(!document.getElementById("type"+username+ids)&&(Date.now()-emittime)>500){
+              emittime=Date.now();
+              socket.emit("chat",{id:ids,typed:"on",username:username});
+          }
+          setTimeout(()=>{
+              types=false;
+               setTimeout(()=>{if(types==false&&(Date.now()-timestamp)>=1000&&document.getElementById("type"+username+ids)){socket.emit("chat",{id:ids,typed:"off",username:username});}},500)
+          },500);
+      }
+  }
+  
+  {{#chats}}
+    socket.on("{{id}}",(msg)=>{
+        on_id("{{id}}",msg);
+    });
+  {{/chats}}
+    
+  socket.on(document.body.id,(newobj)=>{
+      console.log("created chat");
+      var script= document.createElement("script");
+      script.type  = "text/javascript";
+      script.text  = "socket.on('"+newobj._id+"',(msg)=>{console.log('new chat found');on_id('"+newobj._id+"',msg);});";
+      document.body.appendChild(script);
+  
+  
+      var htmls="{{#.}}<div class='chat' id='chat'><div class='text-cont {{user}}' id='chat_cont' onclick='create(this.lastElementChild.innerHTML,this)'><div class='id {{user}}'>{{_id}}</div><img alt='asdf' class='pic' src='{{pic}}'><p class='name' >{{user}}</p></div><ion-icon name='more' class='check'></ion-icon></div>{{/.}}"
+      var finale=Mustache.to_html(htmls,newobj);
+      document.getElementsByClassName("cont")[0].insertAdjacentHTML("beforeend",finale);
+      create(document.getElementsByClassName(newobj.user)[0].lastElementChild.innerHTML,document.getElementsByClassName(newobj.user)[0]);
+  });
+    
+  function search(){
+      console.log("sent");
+      setTimeout(()=>{socket.emit("search",document.getElementById("search").value);},0)
+  }
+  function check(path,name){
+      if(document.getElementsByClassName(name)[0]){
+          create(document.getElementsByClassName(name)[0].lastElementChild.innerHTML,document.getElementsByClassName(name)[0]);
+      }
+      else if(name==username){
+  
+      }
+      else{
+          socket.emit("createc",{creator:username,chatwith:name});
+          
+      }
+  }
+  function on_id(id,msg){
+      if(document.getElementById(id)){
+              if(msg.typed){
+                  if(msg.typed=="on"&&document.getElementById("read-"+id)){
+                      var indicator=document.createElement("p");
+                      indicator.classList.add("left_message");
+                      indicator.classList.add("read");
+                      indicator.innerHTML=msg.username+" is typing"
+                      indicator.id="type"+msg.username+id;
+                      if(msg.username==username){
+                          indicator.style.display="none";
+                          indicator.style.width="0";
+                      }
+                      document.getElementById("read-"+id).appendChild(indicator);
+                      
+                      console.log("appended");
+                  }
+                  else if(msg.typed=="on"){
+                      console.log("almost");
+                  }
+                  else if(msg.typed=="off"){
+                      if(document.getElementById("type"+msg.username+id)){
+                          document.getElementById("type"+msg.username+id).parentElement.removeChild(document.getElementById("type"+msg.username+id)); 
+                      }
+                  }
+              }
+              else{
+                  var message=document.getElementById(id).parentElement.lastElementChild;
+                  console.log("message recieved");
+                  var div=document.createElement("div");
+                  div.className="tcontain";
+                  var diff=message.scrollHeight-message.scrollTop-message.clientHeight;
+               
+                  if(msg.path){
+                      var img=document.createElement("img");
+                      img.src=msg.path;
+                      img.style.maxWidth="50%";
+                      if(username==msg.sender){
+                          img.style.float="right";  
+                      }
+                      div.appendChild(img);
+                  }
+                  else{
+                      var p=document.createElement("p");
+                      p.className="left_message";
+                      if(username==msg.sender){
+                          p.style.float="right";  
+                      }
+                      p.innerText=msg.chat;
+                      div.appendChild(p);
+                  }
+  
+                  if(diff<10){
+                      console.log(diff);
+                      message.appendChild(div);
+                      message.scrollTop=100000000;
+                  }
+                  else{
+                      console.log(diff);
+                      message.appendChild(div);
+                  }
+  
+                  if(document.getElementById("read-"+id)){
+                      document.getElementById("read-"+id).parentElement.removeChild(document.getElementById("read-"+id));    
+                  }
+                  
+                  if(msg.sender!=username){socket.emit("read",id);}
+                      
+              }
+          }
+      else{
+  
+      }
+  }
+//connectjs
+</script>
