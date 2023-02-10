@@ -10,6 +10,7 @@ WARNING: NOT CONSISTENTLY UPDATED SINCE 2019 AND MANY LIBRARY VERSIONS ARE DEPRE
 * Real time messaging<br>
 
 <h1>New Features</h1>
+Updated Login Security and fields<br>
 User Searching<br>
 Multiple chat Windows<br>
 Persistent Messaging<br>
